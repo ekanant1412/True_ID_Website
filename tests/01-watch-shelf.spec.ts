@@ -15,7 +15,7 @@ const URL = 'https://www.trueid.net/watch/th-th';
 
 test.describe('Watch Shelf — คลิปหนังสั้น', () => {
   test('"คลิปสั้นหนังแนะนำ" shelf is visible after scrolling', async ({ page }) => {
-    await gotoAndWait(page, URL, 6000);
+    await gotoAndWait(page, URL, 6000, 'หน้า Watch Shelf');
 
     // 1. Dismiss cookie consent banner if present ("ยอมรับ" button)
     const cookieBtn = page.locator('button:has-text("ยอมรับ"), button:has-text("ยอมรับทั้งหมด"), button:has-text("อนุญาตทั้งหมด")').first();
@@ -148,7 +148,7 @@ test.describe('Watch Shelf — คลิปหนังสั้น', () => {
   });
 
   test('header is present on Watch site', async ({ page }) => {
-    await gotoAndWait(page, URL, 3000);
+    await gotoAndWait(page, URL, 3000, 'หน้า Watch Header');
 
     await checkVisible(page, 'header, [class*="header"], [class*="Header"], nav', 'Header/Nav');
     await checkVisible(
@@ -160,7 +160,7 @@ test.describe('Watch Shelf — คลิปหนังสั้น', () => {
   });
 
   test('search header popup opens', async ({ page }) => {
-    await gotoAndWait(page, URL, 3000);
+    await gotoAndWait(page, URL, 3000, 'หน้า Watch Header');
 
     // Search toggle button: BUTTON.sc-gkJlnC (icon-only, no text)
     // The search FORM (sc-elYLMi) + INPUT[placeholder="ค้นหา"] is always in DOM

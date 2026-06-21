@@ -13,7 +13,7 @@ const URL = 'https://game.trueid.net/th-th';
 test.describe('Game Shelf — แนะนำสำหรับคุณ', () => {
 
   test('เลื่อนหา shelf "แนะนำสำหรับคุณ" และเก็บข้อมูล items', async ({ page }) => {
-    await gotoAndWait(page, URL, 6000);
+    await gotoAndWait(page, URL, 6000, 'หน้า Game Shelf');
 
     // ปิด cookie banner ก่อน (ถ้ามี)
     const cookieBtn = page.locator('button:has-text("ยอมรับ"), button:has-text("Accept")').first();

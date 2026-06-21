@@ -76,7 +76,7 @@ async function navigateNext(page: any, prevUrl: string, timeoutMs = 8000): Promi
 test.describe('SFV Player — Short', () => {
 
   test('video player element is present', async ({ page }) => {
-    await gotoAndWait(page, BASE_URL, 6000);
+    await gotoAndWait(page, BASE_URL, 6000, 'หน้า SFV Player (short)');
     await skipIfBlockedByWAF(page, 'หน้า SFV Player (short)');
     await saveScreenshot(page, '02-sfv-player-full');
 
@@ -89,7 +89,7 @@ test.describe('SFV Player — Short', () => {
   });
 
   test('เลื่อนเปลี่ยนวิดีโอ 20 items — ไม่ซ้ำ และ type ถูกต้อง', async ({ page }) => {
-    await gotoAndWait(page, BASE_URL, 6000);
+    await gotoAndWait(page, BASE_URL, 6000, 'หน้า SFV Player (short)');
     await skipIfBlockedByWAF(page, 'หน้า SFV Player (short)');
 
     // โฟกัสที่ player ก่อนกด keyboard

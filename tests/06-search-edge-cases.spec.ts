@@ -12,7 +12,7 @@
 import { test, expect, Page } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
-import { dismissSiteCover, skipIfBlockedByWAF } from './helpers';
+import { dismissSiteCover, skipIfBlockedByWAF, gotoOrSkip } from './helpers';
 
 const HOME_URL  = 'https://www.trueid.net/th-th';
 const GAME_URL  = 'https://game.trueid.net/th-th';
@@ -32,7 +32,7 @@ async function dismissCookie(page: Page) {
 
 // ── Helper: search บน trueid.net home แล้ว return content items ──────────────
 async function searchTrueID(page: Page, keyword: string) {
-  await page.goto(HOME_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  await gotoOrSkip(page, HOME_URL, 'หน้าหลัก TrueID');
   await page.waitForTimeout(2000);
   await skipIfBlockedByWAF(page, 'หน้าหลัก TrueID');
   await dismissSiteCover(page);
@@ -75,7 +75,7 @@ async function searchTrueID(page: Page, keyword: string) {
     // เพราะ Enter เกิด race condition กับ debounce ของ autocomplete บนเว็บจริง
     // (บางครั้งคำค้นหาหลุดไปแล้ว navigate ไปหน้า search ที่ "เปล่า" แทน) ทำให้ test flaky แบบสุ่ม
     const searchUrl = `${HOME_URL.replace(/\/th-th\/?$/, '')}/th-th/search/${encodeURIComponent(keyword)}?tab=today`;
-    await page.goto(searchUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
+    await gotoOrSkip(page, searchUrl, 'หน้าค้นหา TrueID');
     await page.waitForTimeout(3000);
     await skipIfBlockedByWAF(page, 'หน้าค้นหา TrueID');
     navigated = page.url().includes('/search');
@@ -122,7 +122,7 @@ async function searchGame(page: Page, keyword: string) {
     } catch {}
   });
 
-  await page.goto(GAME_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  await gotoOrSkip(page, GAME_URL, 'หน้าหลัก Game TrueID');
   await page.waitForTimeout(3000);
   await dismissSiteCover(page);
   await dismissCookie(page);

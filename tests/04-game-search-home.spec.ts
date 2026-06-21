@@ -18,7 +18,7 @@ const SEARCH_KEYWORD = 'puzzle';
 test.describe('Game Search', () => {
 
   test(`ค้นหา "${SEARCH_KEYWORD}" แล้วเก็บผลลัพธ์เกมที่ออกมา`, async ({ page }) => {
-    await gotoAndWait(page, URL, 4000);
+    await gotoAndWait(page, URL, 4000, 'หน้า Game Search Home');
 
     // ดักจับ API response ของ search — กรองเฉพาะ request ที่มี keyword ใน URL หรือ request body
     let searchApiData: any[] = [];

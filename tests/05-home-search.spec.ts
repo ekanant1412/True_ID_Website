@@ -10,7 +10,7 @@
 import { test, expect } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
-import { dismissSiteCover, skipIfBlockedByWAF } from './helpers';
+import { dismissSiteCover, skipIfBlockedByWAF, gotoOrSkip } from './helpers';
 
 const HOME_URL     = 'https://www.trueid.net/th-th';
 const KEYWORD      = 'ชินจัง';
@@ -19,7 +19,7 @@ const RESULTS_DIR  = 'test-results';
 test('ค้นหา "ชินจัง" แล้วเก็บ ID ของผลลัพธ์', async ({ page }) => {
 
   // ── 1. เปิดหน้าหลัก ────────────────────────────────────────────────────
-  await page.goto(HOME_URL, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  await gotoOrSkip(page, HOME_URL, 'หน้าหลัก TrueID');
   await page.waitForTimeout(2000);
 
   // ── 1a. skip ถ้าโดน Incapsula WAF บล็อก (พบบ่อยจาก cloud IP เช่น GitHub Actions) ──
@@ -64,7 +64,7 @@ test('ค้นหา "ชินจัง" แล้วเก็บ ID ของ
   // เกิด race condition กับ debounce ของ autocomplete บนเว็บจริง (บางครั้งคำค้นหาหลุดไป
   // แล้ว navigate ไปหน้า search ที่ "เปล่า" แทน) ทำให้ test flaky แบบสุ่ม
   const searchUrl = `${HOME_URL.replace(/\/th-th\/?$/, '')}/th-th/search/${encodeURIComponent(KEYWORD)}?tab=today`;
-  await page.goto(searchUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  await gotoOrSkip(page, searchUrl, 'หน้าค้นหา TrueID');
   console.log(`  📌 URL: ${page.url()}`);
 
   // รอ SSR content render
